@@ -1,6 +1,6 @@
 const API = "http://localhost:3000";
 
-// Elements
+// ELEMENTS
 const loginForm = document.getElementById("login-form");
 const registerForm = document.getElementById("register-form");
 const showRegister = document.getElementById("show-register");
@@ -17,55 +17,33 @@ const navbar = document.querySelector(".navbar");
 const logoutBtn = document.getElementById("logout-btn");
 
 let currentUser = null;
+let editingProfileId = null; // NEW: track editing state
 
-// Mentors list
+// MENTORS DATA
 const mentors = {
   anxiety: { name: "Cherry", specialty: "Anxiety" },
   grief: { name: "Lauren", specialty: "Grief" },
   stress: { name: "Richard", specialty: "Stress" },
-  loneliness: { name: "Elvis", specialty: "Loneliness" },
+  loneliness: { name: "Elvis", specialty: "Loneliness" }
 };
 
-// Show forms toggle
+// SHOW REGISTER/LOGIN FORMS
 showRegister.addEventListener("click", () => {
   loginForm.style.display = "none";
   registerForm.style.display = "block";
 });
-
 showLogin.addEventListener("click", () => {
   registerForm.style.display = "none";
   loginForm.style.display = "block";
 });
 
-// Register
-registerForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const username = document.getElementById("register-username").value;
-  const password = document.getElementById("register-password").value;
-
-  const res = await fetch(`${API}/users`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
-  });
-
-  if (res.ok) {
-    alert("Registration successful. Please log in.");
-    registerForm.reset();
-    registerForm.style.display = "none";
-    loginForm.style.display = "block";
-  }
-});
-
-// Login
+// LOGIN
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const username = document.getElementById("login-username").value;
   const password = document.getElementById("login-password").value;
-
   const res = await fetch(`${API}/users?username=${username}&password=${password}`);
   const data = await res.json();
-
   if (data.length > 0) {
     currentUser = data[0];
     authSection.style.display = "none";
@@ -73,56 +51,77 @@ loginForm.addEventListener("submit", async (e) => {
     navbar.style.display = "flex";
     loadUsers();
   } else {
-    alert("Login failed. Check credentials.");
+    alert("Invalid credentials");
   }
 });
 
-// Logout
+// REGISTER
+registerForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = document.getElementById("register-username").value;
+  const password = document.getElementById("register-password").value;
+  const res = await fetch(`${API}/users`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  });
+  alert("Registered! Now login.");
+  registerForm.reset();
+  registerForm.style.display = "none";
+  loginForm.style.display = "block";
+});
+
+// LOGOUT
 logoutBtn.addEventListener("click", () => {
   location.reload();
 });
 
-// Submit profile
+// PROFILE FORM SUBMIT
 profileForm.addEventListener("submit", async (e) => {
   e.preventDefault();
+  const name = document.getElementById("profile-name").value;
+  const location = document.getElementById("profile-location").value;
+  const image = document.getElementById("profile-image").value;
+  const phone = document.getElementById("profile-phone").value;
+  const age = document.getElementById("profile-age").value;
+  const struggle = document.getElementById("struggle").value;
+  const profile = { userId: currentUser.id, name, location, image, phone, age, struggle };
 
-  const profile = {
-    userId: currentUser.id,
-    name: document.getElementById("profile-name").value,
-    location: document.getElementById("profile-location").value,
-    image: document.getElementById("profile-image").value,
-    phone: document.getElementById("profile-phone").value,
-    age: document.getElementById("profile-age").value,
-    struggle: document.getElementById("struggle").value,
-  };
-
-  await fetch(`${API}/profiles`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(profile),
-  });
+  if (editingProfileId) {
+    await fetch(`${API}/profiles/${editingProfileId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profile)
+    });
+    editingProfileId = null;
+  } else {
+    await fetch(`${API}/profiles`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profile)
+    });
+  }
 
   profileForm.reset();
   loadUsers();
-  showMentor(profile.struggle);
+  showMentor(struggle);
 });
 
-// Load all users
+// LOAD USERS
 async function loadUsers() {
   profileUsersList.innerHTML = "";
   const res = await fetch(`${API}/profiles`);
   const data = await res.json();
-
-  data.forEach((user) => {
+  data.forEach((profile) => {
     const div = document.createElement("div");
     div.className = "user-card";
-    div.textContent = user.name;
-    div.addEventListener("click", () => showUser(user));
+    div.textContent = profile.name;
+    div.addEventListener("click", () => showUser(profile));
     profileUsersList.appendChild(div);
   });
 }
 
-// Show selected user
+// SHOW USER
 function showUser(profile) {
   selectedUserDiv.innerHTML = `
     <h3>${profile.name}</h3>
@@ -131,36 +130,44 @@ function showUser(profile) {
     <p><strong>Age:</strong> ${profile.age}</p>
     <p><strong>Struggle:</strong> ${profile.struggle}</p>
     <img src="${profile.image}" alt="${profile.name}" width="150"/>
-    <div class="btn-group">
-      <button onclick="editUser(${profile.id})" class="edit-btn">Edit</button>
-      <button onclick="deleteUser(${profile.id})" class="delete-btn">Delete</button>
-    </div>
   `;
+
+  const editBtn = document.createElement("button");
+  editBtn.textContent = "Edit";
+  editBtn.classList.add("edit-btn");
+  editBtn.addEventListener("click", () => editUser(profile.id));
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("delete-btn");
+  deleteBtn.addEventListener("click", () => deleteUser(profile.id));
+
+  selectedUserDiv.appendChild(editBtn);
+  selectedUserDiv.appendChild(deleteBtn);
 }
 
-// Show mentor after profile complete
+// SHOW MENTOR
 function showMentor(struggle) {
   const mentor = mentors[struggle];
-  profileSection.style.display = "none";
   mentorSection.style.display = "block";
+  profileSection.style.display = "none";
   mentorNameSpan.textContent = mentor.name;
   mentorSpecialtySpan.textContent = mentor.specialty;
 }
 
-// Delete user
+// DELETE USER
 async function deleteUser(id) {
   if (confirm("Are you sure you want to delete this user?")) {
-    await fetch(`${API}/profiles/${id}`, {
-      method: "DELETE",
-    });
+    await fetch(`${API}/profiles/${id}`, { method: "DELETE" });
     selectedUserDiv.innerHTML = "";
     loadUsers();
   }
 }
 
-// Edit user
+// EDIT USER
 async function editUser(id) {
   const res = await fetch(`${API}/profiles/${id}`);
+<<<<<<< HEAD
   const data = await res.json();
 
   document.getElementById("profile-name").value = data.name;
@@ -175,3 +182,14 @@ async function editUser(id) {
   selectedUserDiv.innerHTML = "";
   loadUsers();
 }
+=======
+  const profile = await res.json();
+  document.getElementById("profile-name").value = profile.name;
+  document.getElementById("profile-location").value = profile.location;
+  document.getElementById("profile-image").value = profile.image;
+  document.getElementById("profile-phone").value = profile.phone;
+  document.getElementById("profile-age").value = profile.age;
+  document.getElementById("struggle").value = profile.struggle;
+  editingProfileId = id; // store for updating later
+}
+>>>>>>> 87679c7 (my first commit)

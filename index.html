@@ -3,156 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mentor App</title>
-  <link rel="stylesheet" href="./css/style.css"/>
+  <title>Mentor Match</title>
+  <link rel="stylesheet" href="./css/style.css" />
 </head>
 <body>
-  <nav class="navbar" style="display:none;">
-    <span>Whispers Of The Heart</span>
-    <div>
-      <a href="#profile-section">Home</a>
-      <a href="#quotes-section">Quotes</a>
-      <a href="#contact-section">Contact</a>
-      <button id="logout-btn">Logout</button>
-    </div>
+  <!-- NAVBAR -->
+  <nav class="navbar hidden">
+    <h1>Mentor Match</h1>
+    <button id="logout-btn">Logout</button>
   </nav>
 
-  <!-- Authentication -->
+  <!-- AUTH SECTION -->
   <section id="auth-section">
-    <div class="auth-container">
-      <form id="login-form">
-        <h2>Login</h2>
-        <input type="text" id="login-username" placeholder="Username" required/>
-        <input type="password" id="login-password" placeholder="Password" required/>
-        <button type="submit">Login</button>
-        <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
-      </form>
+    <h2>Login</h2>
+    <form id="login-form">
+      <input type="text" id="login-username" placeholder="Username" required />
+      <input type="password" id="login-password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
 
-      <form id="register-form" style="display:none;">
-        <h2>Register</h2>
-        <input type="text" id="register-username" placeholder="Username" required/>
-        <input type="password" id="register-password" placeholder="Password" required/>
-        <button type="submit">Register</button>
-        <p>Already have an account? <a href="#" id="show-login">Login</a></p>
-      </form>
+    <form id="register-form" class="hidden">
+      <input type="text" id="register-username" placeholder="Username" required />
+      <input type="password" id="register-password" placeholder="Password" required />
+      <button type="submit">Register</button>
+      <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+    </form>
+  </section>
+
+  <!-- PROFILE SECTION -->
+  <section id="profile-section" class="hidden">
+    <h2>Complete Your Profile</h2>
+    <form id="profile-form">
+      <input type="text" id="profile-name" placeholder="Your Name" required />
+      <input type="text" id="profile-location" placeholder="Location" required />
+      <input type="text" id="profile-image" placeholder="Image URL" />
+      <input type="text" id="profile-phone" placeholder="Phone Number" required />
+      <input type="number" id="profile-age" placeholder="Age" required />
+      <label for="struggle">Struggle:</label>
+      <select id="struggle">
+        <option value="anxiety">Anxiety</option>
+        <option value="grief">Grief</option>
+        <option value="stress">Stress</option>
+        <option value="loneliness">Loneliness</option>
+      </select>
+      <button type="submit">Submit Profile</button>
+    </form>
+
+    <div class="profile-layout">
+      <div id="profile-users-list" class="user-list"></div>
+      <div id="selected-user" class="selected-user-view"></div>
     </div>
   </section>
 
-  <!-- Profile Section -->
-  <section id="profile-section" style="display:none;">
-    <div class="profile-wrapper">
-      <div class="profile-users">
-        <h3>All Users</h3>
-        <div id="profile-users-list"></div>
-      </div>
-
-      <div class="profile-form-area">
-        <h3>Complete Your Profile</h3>
-        <form id="profile-form">
-          <input type="text" id="profile-name" placeholder="Name" required/>
-          <input type="text" id="profile-location" placeholder="Location" required/>
-          <input type="text" id="profile-image" placeholder="Image URL" required/>
-          <input type="text" id="profile-phone" placeholder="Phone Number" required/>
-          <input type="number" id="profile-age" placeholder="Age" required/>
-          <select id="struggle">
-            <option value="anxiety">Anxiety</option>
-            <option value="grief">Grief</option>
-            <option value="stress">Stress</option>
-            <option value="loneliness">Loneliness</option>
-          </select>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-
-      <div class="selected-user" id="selected-user"></div>
+  <!-- MENTOR SECTION -->
+  <section id="mentor-section" class="hidden">
+    <h2>Your Assigned Mentor</h2>
+    <div class="mentor-box">
+      <p><strong>Name:</strong> <span id="mentor-name"></span></p>
+      <p><strong>Specialty:</strong> <span id="mentor-specialty"></span></p>
     </div>
-  </section>
-
-  <!-- Mentor Section -->
-  <!-- <section id="mentor-section" style="display:none;">
-    <h2>Your Mentor</h2>
-    <p><strong>Name:</strong> <span id="mentor-name"></span></p>
-    <p><strong>Specialty:</strong> <span id="mentor-specialty"></span></p> -->
-
-            <!-- Mentor Assignment Section -->
-        <div id="mentor-assigned" class="hidden mentor-card">
-          <h3>Your Assigned Mentor</h3>
-          <article class="flex-card-container mentor-1">
-            <div class="overlay">
-              <img src="../images/side-view-beautiful-woman-outdoors.jpg" alt="Cherry Photo" class="card-img1"/>
-              <h3>01</h3>
-              <h3>Anxiety</h3>
-              <p>Cherry</p>
-              <p>ID: 2345627</p>
-              <p>phone: 0769012801</p>
-              
-            </div>
-          </article>
-
-          <article class="flex-card-container mentor-2">
-            <div class="overlay">
-              <img src="../images/medium-shot-woman-wearing-full-pink-outfit.jpg" alt="Lauren Photo" class="card-img2"/>
-              <h3>02</h3>
-              <h3>Grief</h3>
-              <p>Lauren</p>
-              <p>ID: 7241234</p>
-              <p>phone: 0756342801</p>
-            </div>
-          </article>
-
-          <article class="flex-card-container mentor-3">
-            <div class="overlay">
-              <img src="../images/groom-preparing-his-wedding.jpg" alt="Richard Photo" class="card-img13"/>
-              <h3>03</h3>
-              <h3>Stress</h3>
-              <p>Richard</p>
-              <p>ID: 6541234</p>
-              <p>phone: 0765342802</p>
-            </div>
-          </article>
-
-          <article class="flex-card-container mentor-4">
-            <div class="overlay">
-              <img src="../images/young-stylish-handsome-man-suit-street.jpg" alt="Elvis Photo" class="card-img4"/>
-              <h3>04</h3>
-              <h3>Loneliness</h3>
-              <p>Elvis</p>
-              <p>ID: 8901234</p>
-              <p>phone: 0712342809</p>
-            </div>
-       </article>
-      </div>
-
-    <div id="chat-box" class="chat-box"></div>
-    <input type="text" id="chat-input" placeholder="Type a message..."/>
-    <button id="send-msg">Send</button>
-  </section>
-
-  <!-- Inspirational Quotes Section -->
-  <section id="quotes-section" style="display:none;">
-    <h2>Encouragement</h2>
-    <div class="quotes-container">
-      <div class="quote-card">
-        <img src="./images/quote1.jpg" alt="Inspiration 1">
-        <p>"You don't have to control your thoughts. You just have to stop letting them control you."</p>
-      </div>
-      <div class="quote-card">
-        <img src="./images/quote2.jpg" alt="Inspiration 2">
-        <p>"Tears shed for another person are not a sign of weakness. They are a sign of a pure heart." </p>
-      </div>
-      <div class="quote-card">
-        <img src="./images/quote3.jpg" alt="Inspiration 3">
-        <p>"Sometimes the most productive thing you can do is relax."</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact-section" style="display:none;">
-    <h2>Contact Us</h2>
-    <p>Email: support@HeartHealsapp.com</p>
-    <p>Phone: +123 456 7890</p>
-    <p>Address: 123 Wellness Way, Care City</p>
   </section>
 
   <script src="./src/index.js"></script>
