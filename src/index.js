@@ -13,18 +13,49 @@ const selectedUserDiv = document.getElementById("selected-user");
 const mentorSection = document.getElementById("mentor-section");
 const mentorNameSpan = document.getElementById("mentor-name");
 const mentorSpecialtySpan = document.getElementById("mentor-specialty");
+const mentorAgeSpan = document.getElementById("mentor-age");
+const mentorPhone = document.getElementById("mentor-phone");
 const navbar = document.querySelector(".navbar");
 const logoutBtn = document.getElementById("logout-btn");
+const mentorQuotesContainer = document.getElementById("mentor-quotes");
 
 let currentUser = null;
 let editingProfileId = null; // NEW: track editing state
 
 // MENTORS DATA
 const mentors = {
-  anxiety: { name: "Cherry", specialty: "Anxiety" },
-  grief: { name: "Lauren", specialty: "Grief" },
-  stress: { name: "Richard", specialty: "Stress" },
-  loneliness: { name: "Elvis", specialty: "Loneliness" }
+  anxiety: {
+    name: "Cherry",
+    age: "26",
+    specialty: "Anxiety",
+    phone: "0721456398",
+    quote: "You are stronger than your anxiety.",
+    image: "./images/cherry.jpg"
+  },
+  grief: {
+    name: "Lauren",
+    age: "22",
+    phone: "0748172516",
+    specialty: "Grief",
+    quote: "Healing takes time, and that’s okay.",
+    image: "./images/Lauren.jpg"
+  },
+  stress: {
+    name: "Richard",
+    age: "28",
+    phone: "0756172516",
+    specialty: "Stress",
+    quote: "Take a deep breath. You’ve got this.",
+    image: "./images/Richard.jpg"
+  },
+  loneliness: {
+    name: "Elvis",
+    age: "20",
+    phone: "0768189516",
+    specialty: "Loneliness",
+    quote: "You are never truly alone.",
+    image: "./images/Elvis.jpg"
+  }
 };
 
 // SHOW REGISTER/LOGIN FORMS
@@ -50,6 +81,7 @@ loginForm.addEventListener("submit", async (e) => {
     profileSection.style.display = "block";
     navbar.style.display = "flex";
     loadUsers();
+    renderMentorQuotes();
   } else {
     alert("Invalid credentials");
   }
@@ -167,22 +199,6 @@ async function deleteUser(id) {
 // EDIT USER
 async function editUser(id) {
   const res = await fetch(`${API}/profiles/${id}`);
-<<<<<<< HEAD
-  const data = await res.json();
-
-  document.getElementById("profile-name").value = data.name;
-  document.getElementById("profile-location").value = data.location;
-  document.getElementById("profile-image").value = data.image;
-  document.getElementById("profile-phone").value = data.phone;
-  document.getElementById("profile-age").value = data.age;
-  document.getElementById("struggle").value = data.struggle;
-
-  await fetch(`${API}/profiles/${id}`, { method: "DELETE" });
-
-  selectedUserDiv.innerHTML = "";
-  loadUsers();
-}
-=======
   const profile = await res.json();
   document.getElementById("profile-name").value = profile.name;
   document.getElementById("profile-location").value = profile.location;
@@ -190,6 +206,21 @@ async function editUser(id) {
   document.getElementById("profile-phone").value = profile.phone;
   document.getElementById("profile-age").value = profile.age;
   document.getElementById("struggle").value = profile.struggle;
-  editingProfileId = id; // store for updating later
+  editingProfileId = id; // store for updating later
 }
->>>>>>> 87679c7 (my first commit)
+
+// DISPLAY MENTOR CARDS
+function renderMentorQuotes() {
+  mentorQuotesContainer.innerHTML = "";
+  Object.values(mentors).forEach((mentor) => {
+    const div = document.createElement("div");
+    div.className = "mentor-card";
+    div.innerHTML = `
+      <img src="${mentor.image}" alt="${mentor.name}" class="mentor-img" />
+      <h3>${mentor.name}</h3>
+      <p><strong>${mentor.specialty}</strong></p>
+      <blockquote>${mentor.quote}</blockquote>
+    `;
+    mentorQuotesContainer.appendChild(div);
+  });
+}

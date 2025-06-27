@@ -3,67 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mentor Match</title>
-  <link rel="stylesheet" href="./css/style.css" />
+  <title>Heart-Heals App</title>
+  <link rel="stylesheet" href="./css/style.css"/>
 </head>
 <body>
-  <!-- NAVBAR -->
-  <nav class="navbar hidden">
-    <h1>Mentor Match</h1>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" style="display:none;">
+    <h2>Whispers Of The Heart</h2>
     <button id="logout-btn">Logout</button>
   </nav>
 
-  <!-- AUTH SECTION -->
+  <!-- Authentication Section -->
   <section id="auth-section">
-    <h2>Login</h2>
-    <form id="login-form">
-      <input type="text" id="login-username" placeholder="Username" required />
-      <input type="password" id="login-password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+    <div class="auth-container">
+      <form id="login-form">
+        <h3>Login</h3>
+        <input type="text" id="login-username" placeholder="Username" required />
+        <input type="password" id="login-password" placeholder="Password" required />
+        <button type="submit">Login</button>
+        <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+      </form>
 
-    <form id="register-form" class="hidden">
-      <input type="text" id="register-username" placeholder="Username" required />
-      <input type="password" id="register-password" placeholder="Password" required />
-      <button type="submit">Register</button>
-      <p>Already have an account? <a href="#" id="show-login">Login</a></p>
-    </form>
+      <form id="register-form" style="display:none;">
+        <h3>Register</h3>
+        <input type="text" id="register-username" placeholder="Username" required />
+        <input type="password" id="register-password" placeholder="Password" required />
+        <button type="submit">Register</button>
+        <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+      </form>
+    </div>
   </section>
 
-  <!-- PROFILE SECTION -->
-  <section id="profile-section" class="hidden">
-    <h2>Complete Your Profile</h2>
+  <!-- Profile Form -->
+  <section id="profile-section" style="display:none;">
+    <div class="profile-container">
+    <h3>Complete Your Profile</h3>
     <form id="profile-form">
-      <input type="text" id="profile-name" placeholder="Your Name" required />
+      <input type="text" id="profile-name" placeholder="Full Name" required />
       <input type="text" id="profile-location" placeholder="Location" required />
-      <input type="text" id="profile-image" placeholder="Image URL" />
-      <input type="text" id="profile-phone" placeholder="Phone Number" required />
+      <input type="url" id="profile-image" placeholder="Image URL" required />
+      <input type="text" id="profile-phone" placeholder="Phone" required />
       <input type="number" id="profile-age" placeholder="Age" required />
-      <label for="struggle">Struggle:</label>
-      <select id="struggle">
+      <select id="struggle" required>
+        <option value="">-- Select Your Struggle --</option>
         <option value="anxiety">Anxiety</option>
         <option value="grief">Grief</option>
         <option value="stress">Stress</option>
         <option value="loneliness">Loneliness</option>
       </select>
-      <button type="submit">Submit Profile</button>
+      <button type="submit">Submit</button>
+    </div>
     </form>
 
-    <div class="profile-layout">
+    <!-- Profile View -->
+    <div class="profile-lists">
+      <h3>Users :</h3>
       <div id="profile-users-list" class="user-list"></div>
-      <div id="selected-user" class="selected-user-view"></div>
+      <div id="selected-user" class="user-details"></div>
     </div>
   </section>
 
-  <!-- MENTOR SECTION -->
-  <section id="mentor-section" class="hidden">
-    <h2>Your Assigned Mentor</h2>
-    <div class="mentor-box">
-      <p><strong>Name:</strong> <span id="mentor-name"></span></p>
-      <p><strong>Specialty:</strong> <span id="mentor-specialty"></span></p>
-    </div>
+  <!-- Mentor Section -->
+  <section id="mentor-section" style="display:none;">
+    <h3>Your Assigned Mentor</h3>
+    <p><strong>Name:</strong> <span id="mentor-name"></span></p>
+    <p><strong>Specialty:</strong> <span id="mentor-specialty"></span></p>
+    <p><strong>Age:</strong> <span id="mentor-age"></span></p>
+    <p><strong>phone:</strong> <span id="mentor-phone"></span></p>
   </section>
+
+  <!-- Mentor Quotes & Cards -->
+  <section id="mentor-quotes" class="mentor-cards-container"></section>
 
   <script src="./src/index.js"></script>
 </body>

@@ -49,6 +49,26 @@
       "id": "97bd",
       "username": "Ann Nakir",
       "password": "123"
+    },
+    {
+      "id": "437a",
+      "username": "Jeremy",
+      "password": "12345"
+    },
+    {
+      "id": "5662",
+      "username": "Julius",
+      "password": "098"
+    },
+    {
+      "id": "6af0",
+      "username": "Asha",
+      "password": "1234567"
+    },
+    {
+      "id": "3eed",
+      "username": "Asha",
+      "password": "1234567"
     }
   ],
   "profiles": [
@@ -81,6 +101,36 @@
       "phone": "0734526789",
       "age": "18",
       "struggle": "stress"
+    },
+    {
+      "id": "b873",
+      "userId": "437a",
+      "name": "Jeremy Takir",
+      "location": "Nakuru",
+      "image": "https://cdn.pixabay.com/photo/2024/01/10/16/22/man-8499961_1280.jpg",
+      "phone": "0734526789",
+      "age": "23",
+      "struggle": "stress"
+    },
+    {
+      "id": "a759",
+      "userId": "5662",
+      "name": "Julius Kedienye",
+      "location": "Nairobi",
+      "image": "https://cdn.pixabay.com/photo/2023/08/18/12/35/handsome-boy-8198427_1280.jpg",
+      "phone": "0745637893",
+      "age": "24",
+      "struggle": "anxiety"
+    },
+    {
+      "id": "43fb",
+      "userId": "6af0",
+      "name": "Asha Mohammed",
+      "location": "London",
+      "image": "https://cdn.pixabay.com/photo/2020/09/25/16/50/portrait-5601950_1280.jpg",
+      "phone": "0764863429",
+      "age": "24",
+      "struggle": "grief"
     }
   ],
   "messages": [],
@@ -104,6 +154,7 @@
       "id": "4",
       "name": "Elvis",
       "specialty": "loneliness"
+      
     }
   ]
 }
