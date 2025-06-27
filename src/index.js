@@ -1,4 +1,4 @@
-const API = "http://localhost:3000";
+const API = "https://heart-heals-api.onrender.";
 
 // ELEMENTS
 const loginForm = document.getElementById("login-form");
