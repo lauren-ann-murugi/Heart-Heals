@@ -1,4 +1,4 @@
-const API = "https://heart-heals-api.onrender.";
+const API = "https://heart-heals-api.onrender.com";
 
 // ELEMENTS
 const loginForm = document.getElementById("login-form");
