@@ -1,6 +1,15 @@
 # HeartHeals - A Safe Space for Emotional Support
 
 Welcome to **HeartHeals**, an emotional wellness web application designed and developed by **Lauren Ann Murugi**. This project was built during Phase 1 of my Software Engineering journey, where I learned to combine HTML, CSS, and JavaScript while integrating with a local REST API using `json-server`.
+___
+![Screenshot 2025-06-29 125211](https://github.com/user-attachments/assets/b5baad03-38e0-4d28-b430-e88515f7a0bd)
+___
+![Screenshot 2025-06-29 125351](https://github.com/user-attachments/assets/15a1cd2a-3fe3-469e-bf7e-92ac2436509d)
+___
+![Screenshot 2025-06-29 125416](https://github.com/user-attachments/assets/a272b480-28fb-4730-b1e7-50223bc6a9dc)
+___
+
+
 
 ## Purpose
 
